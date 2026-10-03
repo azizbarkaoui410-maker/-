@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>حاسبة المعدل</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f5f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #1e3a8a;
+    }
+
+    .subject {
+      display: grid;
+      grid-template-columns: 1fr 100px 80px;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 8px;
+      background: #1e3a8a;
+      color: white;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #162d6b;
+    }
+
+    #result {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .note {
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>📚 حاسبة المعدل</h1>
+
+  <p class="note">
+    أدخل اسم المادة، العدد، والمعامل
+  </p>
+
+  <div id="subjects">
+
+    <div class="subject">
+      <input type="text" placeholder="المادة">
+      <input type="number" min="0" max="20" step="0.01" placeholder="العدد">
+      <input type="number" min="1" placeholder="المعامل">
+    </div>
+
+    <div class="subject">
+      <input type="text" placeholder="المادة">
+      <input type="number" min="0" max="20" step="0.01" placeholder="العدد">
+      <input type="number" min="1" placeholder="المعامل">
+    </div>
+
+    <div class="subject">
+      <input type="text" placeholder="المادة">
+      <input type="number" min="0" max="20" step="0.01" placeholder="العدد">
+      <input type="number" min="1" placeholder="المعامل">
+    </div>
+
+  </div>
+
+  <button onclick="addSubject()">➕ إضافة مادة</button>
+
+  <button onclick="calculate()">🧮 احسب المعدل</button>
+
+  <div id="result"></div>
+
+</div>
+
+<script>
+
+function addSubject() {
+
+  const subjects = document.getElementById("subjects");
+
+  const div = document.createElement("div");
+
+  div.className = "subject";
+
+  div.innerHTML = `
+    <input type="text" placeholder="المادة">
+    <input type="number" min="0" max="20" step="0.01" placeholder="العدد">
+    <input type="number" min="1" placeholder="المعامل">
+  `;
+
+  subjects.appendChild(div);
+}
+
+
+function calculate() {
+
+  const subjects = document.querySelectorAll(".subject");
+
+  let total = 0;
+  let coefficients = 0;
+
+  subjects.forEach(subject => {
+
+    const inputs = subject.querySelectorAll("input");
+
+    const mark = parseFloat(inputs[1].value);
+    const coefficient = parseFloat(inputs[2].value);
+
+    if (!isNaN(mark) && !isNaN(coefficient)) {
+
+      total += mark * coefficient;
+
+      coefficients += coefficient;
+
+    }
+
+  });
+
+  if (coefficients === 0) {
+
+    document.getElementById("result").innerHTML =
+      "⚠️ أدخل الأعداد والمعاملات أولاً";
+
+    return;
+  }
+
+  const average = total / coefficients;
+
+  document.getElementById("result").innerHTML =
+    "📊 معدلك هو: " + average.toFixed(2) + " / 20";
+
+}
+
+</script>
+
+</body>
+</html>
